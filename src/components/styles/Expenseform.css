@@ -1,0 +1,53 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+  
+input, select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    transition: border 0.3s ease-in-out;
+    background: white;
+    appearance: none; /* Removes default arrow on select in some browsers */
+}
+
+/* Focus effect for inputs and dropdown */
+input:focus, select:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Styling dropdown arrow */
+select {
+    background: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23333" d="M2 0L0 2h4z"/></svg>') no-repeat right 10px center;
+    background-size: 10px;
+    padding-right: 30px; /* Ensures text doesn't overlap with arrow */
+    cursor: pointer;
+}
+
+/* Button styles */
+button {
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+    background: #0056b3;
+}
