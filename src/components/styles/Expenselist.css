@@ -1,5 +1,6 @@
+/* Expense Container - Center Align Everything */
 .expense-container {
-    max-width: 500px;
+    max-width: 90%;
     margin: 20px auto;
     padding: 20px;
     border-radius: 8px;
@@ -8,20 +9,70 @@
     text-align: center;
 }
 
-h3 {
-    color: #333;
-    font-size: 20px;
-    margin-bottom: 12px;
-    border-bottom: 2px solid #007bff;
-    display: inline-block;
-    padding-bottom: 5px;
+/* Date Filter Styling */
+.date-filter {
+    margin-bottom: 20px;
+    font-size: 16px;
 }
 
+.date-filter input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Flexbox for Tables */
+.tables-container {
+    display: flex; /* Align all tables in a row */
+    gap: 20px; /* Space between tables */
+    justify-content: center; /* Center tables horizontally */
+    overflow-x: auto; /* Allow scrolling if too many tables */
+}
+
+/* Individual Table Container */
+.expense-table {
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    min-width: 300px; /* Ensures each table has a decent width */
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+/* Table Headers */
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Table Header Background */
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Total Row Styling */
+.total-row {
+    font-weight: bold;
+    background-color: #f1f1f1;
+}
+
+/* List styling (for older layout) */
 ul {
     list-style: none;
     padding: 0;
 }
 
+/* Expense list items */
 li {
     background: #fff;
     padding: 10px;
@@ -34,22 +85,37 @@ li {
     align-items: center;
     transition: transform 0.2s ease-in-out;
 }
+h3 {
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 12px;
+    border-bottom: 2px solid #007bff;
+    display: block;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
 
+/* Hover effect on list items */
 li:hover {
     transform: scale(1.02);
     background: #eef5ff;
 }
 
-.pie-chart-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    max-width: 100%;
-    overflow: hidden;
+/* Delete button styling */
+button {
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s ease-in-out;
 }
 
-.pie-chart-container canvas {
-    max-width: 300px; /* Limits size */
-    max-height: 300px;
+button:hover {
+    background: darkred;
+}
+
+.selectDate{
+    margin : 30px auto ;
 }

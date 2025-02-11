@@ -10,29 +10,23 @@ const Expenseform = ({onExpenseAdded}) => {
     const [amount,setAmount] = useState('');
     const [category,setCategory] = useState('');
     const [description,setDescription] = useState('');
+    const [date,setDate] = useState('');
 
     const handleSubmit= async(e) =>{
         e.preventDefault();
-        if(!amount || !category)
+        if(!amount || !category || !date)
             {
-
                 console.log("error");
-                return toast.error("Both amount and category required!");
+                return toast.error("Both amount, category and date are required!");
             } 
         try{
-            const mockResponse = {
-                id:Math.floor(Math.random()*1000),
-                amount: parseFloat(amount),
-                category,
-                description
-            };
-            //const response = await axios.post('http://localhost:5173/expenses',{amount,category,description});
-           // onExpenseAdded(response.data);
-            onExpenseAdded(mockResponse);
+            const response = await axios.post('http://localhost:5000/expenses',{amount,category,description,date});
+            onExpenseAdded(response.data)
             toast.success("Expense added.");
             setAmount('');
             setCategory('');
             setDescription('');
+            setDate('');
         }
         catch(e){
             toast.error("Failed!");
@@ -41,7 +35,7 @@ const Expenseform = ({onExpenseAdded}) => {
 
   return (
     <form onSubmit={handleSubmit}>
-        <input type="number" placeholder='Amount' value={amount} onChange={(e) => setAmount(e.target.value)}/>
+        <input type="number" placeholder='Amount' value={amount} onChange={(e) => setAmount(Number(e.target.value))}/>
         {/* <input type="text" placeholder='Category' value={category} onChange={(e) => setCategory(e.target.value)}/> */}
         <select value={category} onChange={(e) => setCategory(e.target.value)}>
                 <option value="">Select Category</option>
@@ -50,6 +44,7 @@ const Expenseform = ({onExpenseAdded}) => {
                 <option value="Entertainment">Entertainment</option>
             </select>
         <input type="text" placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)}/>
+        <input type="date" value={date} onChange={(e) => setDate(e.target.value)}/>
         <button type='submit'>Add Expense</button>
     </form>
   )

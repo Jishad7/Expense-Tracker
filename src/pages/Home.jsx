@@ -20,7 +20,6 @@ const Home = () => {
       expenses = {expenses}
       setExpenses={setExpenses}
     />
-    <div>Welcome to expense</div>
     </>
   )
 }

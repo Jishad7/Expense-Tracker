@@ -1,12 +1,13 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
+import ExpenseChart from '../components/ExpenseChart'
 
 const Dashboard = () => {
   return (
     <>
     <Navbar />
-    <div>
-      Expense Statistics
+    <div className='container'>
+      <ExpenseChart />
     </div>
     </>
   )

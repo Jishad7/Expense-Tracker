@@ -1,62 +1,101 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Pie } from 'react-chartjs-2';
-import {
-    Chart as ChartJS,
-    ArcElement,
-    Tooltip,
-    Legend,
-    Title,
-    CategoryScale
-} from 'chart.js';
+// import { Pie } from 'react-chartjs-2';
+// import {
+//     Chart as ChartJS,
+//     ArcElement,
+//     Tooltip,
+//     Legend,
+//     Title,
+//     CategoryScale
+// } from 'chart.js';
 import './styles/Expenselist.css'
 
 // Register the necessary components
-ChartJS.register(ArcElement, Tooltip, Legend, Title, CategoryScale);
+//ChartJS.register(ArcElement, Tooltip, Legend, Title, CategoryScale);
 
 const ExpenseList = ({expenses , setExpenses}) => {
-    // const [expenses,setExpenses]=useState([]);
-    useEffect(()=>{
-        //axios.get('http://localhost:5000/expenses').then(res => setExpenseList(res.data)).catch(err => console.error(err));
-         // Mock data instead of API call
-         const mockExpenses = [
-            { id: 1, category: 'Food', amount: 200, description: 'Groceries' },
-            { id: 2, category: 'Transport', amount: 50, description: 'Bus fare' },
-            { id: 3, category: 'Entertainment', amount: 100, description: 'Movie' },
-        ];
-        setExpenses(mockExpenses);
-    },[setExpenses]);
 
-    const categories = [...new Set(expenses.map(expense=>expense.category))];
-    const amounts = categories.map((category)=>{
-        return expenses.filter((expense)=>expense.category===category).reduce((acc, expense) => acc + expense.amount, 0);
-    });
-        // Chart data
-    const chartData = {
-        labels: categories,
-        datasets: [
+    const [selectedDate , setSelectedDate] = useState('');
+
+    useEffect(()=>{
+        if(selectedDate)
         {
-            data: amounts,
-            backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56'], // Customize colors
-        },
-        ],  
-    };
+            axios.get(`http://localhost:5000/expenses?date=${selectedDate}`)
+                .then(res => setExpenses(res.data))
+                .catch(err => console.error(err));
+        }
+        else
+        axios.get('http://localhost:5000/expenses').then(res => setExpenses(res.data)).catch(err => console.error(err));
+    },[setExpenses,selectedDate]);
+
+    const handleDelete = async(id)=>{
+        try{
+            await axios.delete(`http://localhost:5000/expenses/${id}`);
+            setExpenses(expenses.filter(expense => expense.id != id));
+        }
+        catch(err)
+        {
+            console.error("Error deleting expense",err);
+        }
+    }
+
+
+    const groupedExpenses = expenses.reduce((acc, expense) => {
+        acc[expense.category] = acc[expense.category] || [];
+        acc[expense.category].push(expense);
+        return acc;
+    }, {});
+
 
   return (
-    <div>
-      <h3>Expense History</h3>
-        <ul>
-            {expenses.map(expense => (
-                <li key={expense.id}>
-                    {expense.category}: ₹{expense.amount} ({expense.description})
-                </li>
-            ) )}
-        </ul>
-        <h3>Expense Distribution</h3>
-        <div className="pie-chart-container">
-            <Pie data={chartData}/>
+    <div className='expense-container'>
+            <h3>Expense History</h3>
+            <div className="selectDate">
+            <label>Select Date: </label>
+            <input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
+            </div>
+            <div className="tables-container">
+                {Object.keys(groupedExpenses).length > 0 ? (
+                    Object.keys(groupedExpenses).map(category => {
+                        const total = groupedExpenses[category]?.reduce((sum, expense) => sum + Number(expense.amount || 0), 0) || 0;
+                        return (
+                            <div className="expense-table" key={category}>
+                                <h4>{category}</h4>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Amount</th>
+                                            <th>Description</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {groupedExpenses[category].map(expense => (
+                                            <tr key={expense.id}>
+                                                <td>₹{expense.amount}</td>
+                                                <td>{expense.description}</td>
+                                                <td>{expense.date}</td>
+                                                <td><button onClick={() => handleDelete(expense.id)}>Delete</button></td>
+                                            </tr>
+                                        ))}
+                                        {/* Total Row */}
+                                        <tr className="total-row">
+    <td colSpan="3"><strong>Total</strong></td>
+    <td><strong>₹{Number(total).toFixed(2)}</strong></td>
+</tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        );
+                    })
+                ) : (
+                    <h3>No expenses found for the selected date</h3>
+                )}
+            </div>
         </div>
-    </div>
   )
 }
 

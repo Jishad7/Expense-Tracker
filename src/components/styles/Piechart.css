@@ -1,0 +1,26 @@
+.pie-chart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px; /* Adjust width as needed */
+    margin: 20px auto; /* Centers it horizontally */
+    text-align: center;
+}
+
+.filter-container {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.filter-container input {
+    padding: 5px;
+    font-size: 14px;
+}
+
+.pie-chart-container canvas {
+    max-width: 300px;
+    max-height: 300px;
+    display: block;
+}
