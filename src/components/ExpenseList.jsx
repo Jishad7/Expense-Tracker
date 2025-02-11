@@ -16,22 +16,24 @@ import './styles/Expenselist.css'
 
 const ExpenseList = ({expenses , setExpenses}) => {
 
+    const BASE_URL = 'https://expense-tracker-backend-1-tukw.onrender.com/expenses';
+
     const [selectedDate , setSelectedDate] = useState('');
 
     useEffect(()=>{
         if(selectedDate)
         {
-            axios.get(`http://localhost:5000/expenses?date=${selectedDate}`)
+            axios.get(`${BASE_URL}?date=${selectedDate}`)
                 .then(res => setExpenses(res.data))
                 .catch(err => console.error(err));
         }
         else
-        axios.get('http://localhost:5000/expenses').then(res => setExpenses(res.data)).catch(err => console.error(err));
+        axios.get(`${BASE_URL}`).then(res => setExpenses(res.data)).catch(err => console.error(err));
     },[setExpenses,selectedDate]);
 
     const handleDelete = async(id)=>{
         try{
-            await axios.delete(`http://localhost:5000/expenses/${id}`);
+            await axios.delete(`${BASE_URL}/${id}`);
             setExpenses(expenses.filter(expense => expense.id != id));
         }
         catch(err)

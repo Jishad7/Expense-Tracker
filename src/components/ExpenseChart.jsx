@@ -16,6 +16,8 @@ ChartJS.register(ArcElement, Tooltip, Legend, Title, CategoryScale);
 
 const ExpenseChart = () => {
 
+    const BASE_URL = 'https://expense-tracker-backend-1-tukw.onrender.com/expenses';
+
     const [chartData, setChartData] = useState({ labels: [], datasets: [{ data: [], backgroundColor: [] }] });
     const [selectedDate, setSelectedDate] = useState(''); 
 
@@ -24,8 +26,8 @@ const ExpenseChart = () => {
       const fetchData = async () => {
           try {
               const url = selectedDate 
-                  ? `http://localhost:5000/expenses/stats?date=${selectedDate}`
-                  : 'http://localhost:5000/expenses/stats';
+                  ? `${BASE_URL}/stats?date=${selectedDate}`
+                  : `${BASE_URL}/stats`;
               
               const res = await axios.get(url);
               console.log("API response", res.data);

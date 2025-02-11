@@ -20,7 +20,7 @@ const Expenseform = ({onExpenseAdded}) => {
                 return toast.error("Both amount, category and date are required!");
             } 
         try{
-            const response = await axios.post('http://localhost:5000/expenses',{amount,category,description,date});
+            const response = await axios.post(`${BASE_URL}`,{amount,category,description,date});
             onExpenseAdded(response.data)
             toast.success("Expense added.");
             setAmount('');
