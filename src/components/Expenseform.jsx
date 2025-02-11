@@ -7,6 +7,9 @@ import './styles/Expenseform.css'
 
 const Expenseform = ({onExpenseAdded}) => {
 
+
+    const BASE_URL = 'https://expense-tracker-backend-1-tukw.onrender.com/expenses';
+
     const [amount,setAmount] = useState('');
     const [category,setCategory] = useState('');
     const [description,setDescription] = useState('');
